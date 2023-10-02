@@ -30,15 +30,15 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
     - name: Build Docker Image
-      run: docker build . --file Dockerfile --tag weatheranalytics:latest
+      run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_USER }}/weatheranalytics:latest
     - name: Docker Login
       env:
-        DOCKER_USER: ${{secrets.DOCKER_USER}}
-        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+        DOCKER_USER: ${{ secrets.DOCKER_USER }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
     - name: Docker Push
-      run: docker push ${{secrets.DOCKER_USER}}/weatheranalytics:latest
+      run: docker push ${{ secrets.DOCKER_USER }}/weatheranalytics:latest
     - name: executing remote ssh commands using password
       uses: appleboy/ssh-action@v1.0.0
       with:
