@@ -39,3 +39,11 @@ jobs:
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
     - name: Docker Push
       run: docker push ${{ secrets.DOCKER_USER }}/weatheranalytics:latest
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERN }}
+        password: ${{ secrets.SSH_PASSWORD }}
+        port: 22
+        script: whoami
