@@ -30,6 +30,7 @@ public class NWSService {
 
             if (!notGood.contains(name) && !name.endsWith("Night")) {
                 Integer temp = jsonArray.getJSONObject(i).getInt("temperature");
+                System.out.println(name + ": " + temp);
                 return name + ": " + temp;
             }
         }
