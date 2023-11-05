@@ -46,7 +46,9 @@ jobs:
         username: ${{ secrets.SSH_USER }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 22
-        script: ls
+        script: |
+          docker stop weatheranalytics:latest && docker rm weatheranalytics:latest
+          docker pull ${{ secrets.DOCKER_USER }}/weatheranalytics:latest
       #env:
       #  PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       #  HOST: ${{ secrets.SSH_HOST }}
