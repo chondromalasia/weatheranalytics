@@ -50,6 +50,7 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 22
         script: |
+          echo test
           echo $DOCKER_PASSWORD
           echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin
           docker stop weatheranalytics:latest && docker rm weatheranalytics:latest
