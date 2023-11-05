@@ -38,7 +38,7 @@ jobs:
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
     - name: Docker Push
-      run: docker push ${{ secrets.DOCKER_USER }}/weatheranalytics:latest
+      run: docker push --platform linux/amd64 ${{ secrets.DOCKER_USER }}/weatheranalytics:latest
     - name: executing remote ssh commands using password
       uses: appleboy/ssh-action@v1.0.0
       env:
