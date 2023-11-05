@@ -30,7 +30,7 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
     - name: Build Docker Image
-      run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_USER }}/weatheranalytics:latest
+      run: docker buildx build --platform linux/arm64 . --file Dockerfile --tag ${{ secrets.DOCKER_USER }}/weatheranalytics:latest
     - name: Docker Login
       env:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
@@ -45,14 +45,17 @@ jobs:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       with:
+        envs: DOCKER_USER,DOCKER_PASSWORD
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USER }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 22
         script: |
-          echo "$DOCKER_PASSWORD" | docker login -u $DOCKER_USER --password-stdin
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
           docker stop weatheranalytics:latest && docker rm weatheranalytics:latest
           docker pull $DOCKER_USER/weatheranalytics:latest
+          docker run -d --platform linux/arm64 -p8080:8080 $DOCKER_USER/weatheranalytics:latest
+          curl 0.0.0.0:8080/beepboop
       #env:
       #  PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       #  HOST: ${{ secrets.SSH_HOST }}
