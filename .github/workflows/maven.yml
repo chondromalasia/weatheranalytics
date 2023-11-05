@@ -54,7 +54,7 @@ jobs:
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
           docker stop weatheranalytics:latest && docker rm weatheranalytics:latest
           docker pull $DOCKER_USER/weatheranalytics:latest
-          docker run --platform linux/arm64 $DOCKER_USER/weatheranalytics:latest
+          docker run -d --platform linux/arm64 $DOCKER_USER/weatheranalytics:latest
           curl http://localhost:8080/beepboop
       #env:
       #  PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
