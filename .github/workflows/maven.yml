@@ -41,14 +41,18 @@ jobs:
       run: docker push ${{ secrets.DOCKER_USER }}/weatheranalytics:latest
     - name: executing remote ssh commands using password
       uses: appleboy/ssh-action@v1.0.0
+      env:
+        DOCKER_USER: ${{ secrets.DOCKER_USER }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       with:
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USER }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 22
         script: |
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
           docker stop weatheranalytics:latest && docker rm weatheranalytics:latest
-          docker pull ${{ secrets.DOCKER_USER }}/weatheranalytics:latest
+          docker pull DOCKER_USER/weatheranalytics:latest
       #env:
       #  PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       #  HOST: ${{ secrets.SSH_HOST }}
