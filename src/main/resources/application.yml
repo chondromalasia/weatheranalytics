@@ -1,0 +1,10 @@
+spring:
+  kafka:
+    properties:
+      security.protocol: SASL_SSL
+      sasl.jaas.config: "org.apache.kafka.common.security.plain.PlainLoginModule required username='${CONFLUENT_CLOUD_API_KEY_PRODUCER}' password='${CONFLUENT_CLOUD_API_SECRET_PRODUCER}';"
+      sasl.mechanism: PLAIN
+    producer:
+      bootstrap-servers: pkc-7xoy1.eu-central-1.aws.confluent.cloud:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
