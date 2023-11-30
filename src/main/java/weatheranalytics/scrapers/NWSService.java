@@ -48,4 +48,8 @@ public class NWSService {
     public String dummyProduce() {
         return producer.send("forecasts", "testtest");
     }
+
+    public String isAlive() {
+        return nwsWebClient.isAlive();
+    }
 }
