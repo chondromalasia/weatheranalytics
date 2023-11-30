@@ -33,6 +33,10 @@ public class NWSWebClient {
                 .bodyToMono(String.class);
     }
 
+    public String isAlive() {
+        return "Alive";
+    }
+
     // TODO move config like https://archive.ph/wXmVX
 /*
 
