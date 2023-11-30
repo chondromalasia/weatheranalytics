@@ -1,20 +1,22 @@
 package weatheranalytics;
 
+import org.json.JSONObject;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
+import weatheranalytics.entities.Forecast;
 
 @Component
 public class Producer {
 
-    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<String, Forecast> kafkaTemplate;
 
-    public Producer(KafkaTemplate<String, String> kafkaTemplate) {
+    public Producer(KafkaTemplate<String, Forecast> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    public String send(String topic, String message) {
+    public String send(String topic, Forecast forecast) {
 
-        kafkaTemplate.send(topic, message);
+        kafkaTemplate.send(topic, forecast);
 
         return "sent";
 
