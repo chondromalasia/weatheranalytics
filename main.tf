@@ -163,6 +163,10 @@ resource "confluent_kafka_topic" "forecasts" {
     key    = confluent_api_key.admin-kafka-api-key.id
     secret = confluent_api_key.admin-kafka-api-key.secret
   }
+
+  config = {
+    "retention.ms" = "3888000000"
+  }
 }
 
 resource "confluent_kafka_acl" "app-producer-write-on-topic" {
