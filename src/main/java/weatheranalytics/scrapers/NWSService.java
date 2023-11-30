@@ -68,4 +68,12 @@ public class NWSService {
 
         return "nermp";
     }
+
+    public String dummyProduce() {
+        return producer.send("forecasts", "testtest");
+    }
+
+    public String isAlive() {
+        return nwsWebClient.isAlive();
+    }
 }

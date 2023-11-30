@@ -55,4 +55,4 @@ jobs:
           docker stop weatheranalytics:latest && docker rm weatheranalytics:latest
           docker pull $DOCKER_USER/weatheranalytics:latest
           docker run -d --platform linux/arm64 -p8080:8080 $DOCKER_USER/weatheranalytics:latest
-          #curl 0.0.0.0:8080/beepboop
+          curl 0.0.0.0:8080/isAlive

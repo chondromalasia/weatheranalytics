@@ -17,4 +17,14 @@ public class NWSController {
     public String NWSTomorrowTemp(){
         return nwsService.simpleCall();
     }
+
+    @GetMapping("/testproduce")
+    public String dummyProduce(){
+        return nwsService.dummyProduce();
+    }
+
+    @GetMapping("/isAlive")
+    public String isAlive() {
+        return nwsService.isAlive();
+    }
 }
