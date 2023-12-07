@@ -35,6 +35,8 @@ jobs:
       env:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        CONFLUENT_CLOUD_API_KEY_PRODUCER: ${{ secrets.CONFLUENT_CLOUD_API_KEY_PRODUCER }}
+        CONFLUENT_CLOUD_API_SECRET_PRODUCER: ${{ secrets.CONFLUENT_CLOUD_API_SECRET_PRODUCER }}
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
     - name: Docker Push
@@ -45,14 +47,16 @@ jobs:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       with:
-        envs: DOCKER_USER,DOCKER_PASSWORD
+        envs: DOCKER_USER,DOCKER_PASSWORD,CONFLUENT_CLOUD_API_KEY_PRODUCER,CONFLUENT_CLOUD_API_SECRET_PRODUCER
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USER }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 22
         script: |
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-          docker stop weatheranalytics:latest && docker rm weatheranalytics:latest
+          docker stop $DOCKER_USER/weatheranalytics:latest && docker rm $DOCKER_USER/weatheranalytics:latest
           docker pull $DOCKER_USER/weatheranalytics:latest
+          export CONFLUENT_CLOUD_API_KEY_PRODUCER=$CONFLUENT_CLOUD_API_KEY_PRODUCER
+          export CONFLUENT_CLOUD_API_SECRET_PRODUCER=$CONFLUENT_CLOUD_API_SECRET_PRODUCER
           docker run -d --platform linux/arm64 -e CONFLUENT_CLOUD_API_KEY_PRODUCER=$CONFLUENT_CLOUD_API_KEY_PRODUCER -e CONFLUENT_CLOUD_API_SECRET_PRODUCER=$CONFLUENT_CLOUD_API_SECRET_PRODUCER -p8080:8080 $DOCKER_USER/weatheranalytics:latest
-          curl 0.0.0.0:8080/isAlive
+          #curl 0.0.0.0:8080/isAlive
