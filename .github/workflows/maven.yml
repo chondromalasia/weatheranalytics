@@ -54,5 +54,5 @@ jobs:
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
           docker stop weatheranalytics:latest && docker rm weatheranalytics:latest
           docker pull $DOCKER_USER/weatheranalytics:latest
-          docker run -d --platform linux/arm64 -p8080:8080 $DOCKER_USER/weatheranalytics:latest
+          docker run -d --platform linux/arm64 -e CONFLUENT_CLOUD_API_KEY_PRODUCER=$CONFLUENT_CLOUD_API_KEY_PRODUCER -e CONFLUENT_CLOUD_API_SECRET_PRODUCER=$CONFLUENT_CLOUD_API_SECRET_PRODUCER -p8080:8080 $DOCKER_USER/weatheranalytics:latest
           curl 0.0.0.0:8080/isAlive

@@ -15,7 +15,7 @@ public class Scheduler {
         this.nwsService = nwsService;
     }
 
-    @Scheduled(cron = "0 * * * *")
+    @Scheduled(cron = "0 0 * * * *")
     public void nwsCentralPark (){
         nwsService.simpleCall();
 

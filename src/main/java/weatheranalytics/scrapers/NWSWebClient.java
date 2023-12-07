@@ -2,6 +2,7 @@ package weatheranalytics.scrapers;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
@@ -34,7 +35,11 @@ public class NWSWebClient {
     }
 
     public String isAlive() {
-        return "Alive";
+        System.getenv().forEach((k,v) -> {
+            System.out.println(k + ":" + v);
+        });
+
+        return "nermp";
     }
 
     // TODO move config like https://archive.ph/wXmVX
