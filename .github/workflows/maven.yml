@@ -35,6 +35,8 @@ jobs:
       env:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        CONFLUENT_CLOUD_API_KEY_PRODUCER: ${{ secrets.CONFLUENT_CLOUD_API_KEY_PRODUCER }}
+        CONFLUENT_CLOUD_API_SECRET_PRODUCER: ${{ secrets.CONFLUENT_CLOUD_API_SECRET_PRODUCER }}
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
     - name: Docker Push
