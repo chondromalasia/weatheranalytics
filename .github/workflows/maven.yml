@@ -52,7 +52,9 @@ jobs:
         port: 22
         script: |
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-          docker stop weatheranalytics:latest && docker rm weatheranalytics:latest
+          docker stop $DOCKER_USER/weatheranalytics:latest && docker rm $DOCKER_USER/weatheranalytics:latest
           docker pull $DOCKER_USER/weatheranalytics:latest
+          export CONFLUENT_CLOUD_API_KEY_PRODUCER=$CONFLUENT_CLOUD_API_KEY_PRODUCER
+          export CONFLUENT_CLOUD_API_SECRET_PRODUCER=$CONFLUENT_CLOUD_API_SECRET_PRODUCER
           docker run -d --platform linux/arm64 -e CONFLUENT_CLOUD_API_KEY_PRODUCER=$CONFLUENT_CLOUD_API_KEY_PRODUCER -e CONFLUENT_CLOUD_API_SECRET_PRODUCER=$CONFLUENT_CLOUD_API_SECRET_PRODUCER -p8080:8080 $DOCKER_USER/weatheranalytics:latest
           curl 0.0.0.0:8080/isAlive
