@@ -45,7 +45,7 @@ jobs:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       with:
-        envs: DOCKER_USER,DOCKER_PASSWORD
+        envs: DOCKER_USER,DOCKER_PASSWORD,CONFLUENT_CLOUD_API_KEY_PRODUCER,CONFLUENT_CLOUD_API_SECRET_PRODUCER
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USER }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
